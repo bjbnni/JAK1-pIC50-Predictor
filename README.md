@@ -3,7 +3,7 @@
 A hybrid Graph Attention Network (GAT) and Streamlit web application for predicting the inhibitory potency (pIC50) of small molecules against Janus Kinase 1 (JAK1).
 
 ## Overview
-The model combines molecular graph representations (3-layer GATConv) with 1,301 selected 2D RDKit descriptors and Morgan fingerprints. It achieved an R2 of 0.8701 on the held-out test set and was validated using 30-iteration X-Scrambling (`validation_x_scrambling.py`).
+The model combines molecular graph representations (3-layer GATConv) with 1,301 selected 2D RDKit descriptors and Morgan fingerprints. It achieved an R2 of 0.8701 on the held-out test set and was validated using 30-iteration X-Scrambling (`test_x.py`).
 
 ## Dataset
 Due to GitHub file size limits, the full curated dataset (`7000.xlsx`) is hosted externally:
@@ -23,7 +23,7 @@ Note: The web app does not require `7000.xlsx` to run because the pre-fitted sca
 
 ## Usage
 ```bash
-git clone [https://github.com/bjbnni/JAK1-pIC50-Predictor.git](https://github.com/bjbnni/JAK1-pIC50-Predictor.git)
+git clone https://github.com/bjbnni/JAK1-pIC50-Predictor.git 
 cd JAK1-pIC50-Predictor
 pip install -r requirements.txt
 streamlit run app.py
