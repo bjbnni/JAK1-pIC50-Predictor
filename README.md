@@ -5,6 +5,10 @@ A hybrid Graph Attention Network (GAT) and Streamlit web application for predict
 ## Overview
 The model combines molecular graph representations (3-layer GATConv) with 1,301 selected 2D RDKit descriptors and Morgan fingerprints. It achieved an R2 of 0.8701 on the held-out test set and was validated using 30-iteration X-Scrambling (`test_x.py`).
 
+## Demo
+Watch a short demonstration of the Streamlit web application and prediction workflow:
+[Watch Demo Video via Google Drive](https://drive.google.com/file/d/12eKpurmz6-5S4AqxWpfMJX5D7pX9q-Br/view?usp=drive_link)
+
 ## Dataset
 Due to GitHub file size limits, the full curated dataset (`7000.xlsx`) is hosted externally:
 [Download 7000.xlsx via Google Drive](https://docs.google.com/spreadsheets/d/15QUSk91LHd5MgHH6BIlFYuscHMTEsRxu/edit?gid=451988406#gid=451988406)
@@ -23,7 +27,7 @@ Note: The web app does not require `7000.xlsx` to run because the pre-fitted sca
 
 ## Usage
 ```bash
-git clone https://github.com/bjbnni/JAK1-pIC50-Predictor.git 
+git clone [https://github.com/bjbnni/JAK1-pIC50-Predictor.git](https://github.com/bjbnni/JAK1-pIC50-Predictor.git)
 cd JAK1-pIC50-Predictor
 pip install -r requirements.txt
 streamlit run app.py
