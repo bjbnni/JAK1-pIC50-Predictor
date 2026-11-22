@@ -13,7 +13,7 @@ Note: The web app does not require `7000.xlsx` to run because the pre-fitted sca
 
 ## Files
 - `app.py`: Streamlit web interface and inference engine.
-- `validation_x_scrambling.py`: X-Scrambling and feature importance validation script.
+- `test_x.py`: X-Scrambling and feature importance validation script.
 - `jak1_gat_7000_best.pth`: Trained PyTorch model weights.
 - `my_scaler.pkl`: Pre-fitted StandardScaler.
 - `best.vv.csv`: Selected 1,301 features.
