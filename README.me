@@ -1,43 +1,30 @@
-# 🧪 Hybrid Graph Attention Network (GAT) for JAK1 Inhibitor Activity Prediction
+# JAK1 Inhibitor pIC50 Predictor
 
-An end-to-end Cheminformatics and Deep Learning pipeline designed to predict the inhibitory potency ($\text{pIC}_{50}$) of small molecules against **Janus Kinase 1 (JAK1)**. This repository includes the trained model weights, feature scaling artifacts, rigorous QSAR validation scripts (X-Scrambling), and an interactive high-throughput web interface built with Streamlit.
+A hybrid Graph Attention Network (GAT) and Streamlit web application for predicting the inhibitory potency (pIC50) of small molecules against Janus Kinase 1 (JAK1).
 
----
+## Overview
+The model combines molecular graph representations (3-layer GATConv) with 1,301 selected 2D RDKit descriptors and Morgan fingerprints. It achieved an R2 of 0.8701 on the held-out test set and was validated using 30-iteration X-Scrambling (`validation_x_scrambling.py`).
 
-## 🔬 Scientific Methodology & Architecture
+## Dataset
+Due to GitHub file size limits, the full curated dataset (`7000.xlsx`) is hosted externally:
+[Download 7000.xlsx via Google Drive](YOUR_GOOGLE_DRIVE_LINK_HERE)
 
-Traditional Quantitative Structure-Activity Relationship (QSAR) models rely either solely on 2D molecular descriptors/fingerprints or purely on molecular graphs. To maximize predictive power and capture both local chemical environments and global physicochemical properties, this project implements an **Advanced Hybrid Graph Attention Network (`AdvancedHybridGAT`)**:
+Note: The web app does not require `7000.xlsx` to run because the pre-fitted scaler is saved in `my_scaler.pkl`.
 
-1. **Graph Representation Branch:**
-   * Molecular structures (SMILES) are parsed via `RDKit` into bidirectional graphs where nodes represent atoms (6 physicochemical atom features) and edges represent chemical bonds (6 bond features including conjugation and ring membership).
-   * Three sequential multi-head **Graph Attention Layers (`GATConv`)** with `ELU` activations and global mean pooling extract topological embeddings.
-2. **Tabular Descriptors Branch:**
-   * Extracts 2,048-bit Morgan Fingerprints (radius 2) alongside full 2D RDKit molecular descriptors.
-   * Dimensionality reduction via permutation/R²-drop importance retains the top **1,301 informative features**, standardized using a pre-fitted `StandardScaler`.
-   * Processed through a dedicated Multi-Layer Perceptron (MLP) with Batch Normalization and Dropout ($p = 0.4$) to prevent overfitting.
-3. **Feature Fusion & Regression:**
-   * Graph embeddings and tabular representations are concatenated and passed through a dense regression head to output continuous $\text{pIC}_{50}$ predictions.
+## Files
+- `app.py`: Streamlit web interface and inference engine.
+- `validation_x_scrambling.py`: X-Scrambling and feature importance validation script.
+- `jak1_gat_7000_best.pth`: Trained PyTorch model weights.
+- `my_scaler.pkl`: Pre-fitted StandardScaler.
+- `best.vv.csv`: Selected 1,301 features.
+- `x_scrambling_7000_1301_report.csv`: Validation report.
+- `feature_audit_report_7000.csv` & `clean_features_7000.csv`: Feature auditing metadata.
+- `requirements.txt`: Python dependencies.
 
----
-
-## 📊 Model Performance & Validation
-
-* **Validation Performance:** Achieved a coefficient of determination of **$R^2 = 0.8701$** on held-out test compounds, demonstrating strong generalization across diverse chemical scaffolds.
-* **Rigorous QSAR Validation (X-Scrambling & Feature Auditing):** To rule out chance correlation and ensure model interpretability, `validation_x_scrambling.py` performs 30-iteration global X-scrambling and individual permutation feature importance across all 1,301 descriptors (full results archived in `x_scrambling_7000_1301_report.csv`).
-* **Assay Heterogeneity & Biological Context:** In cheminformatics modeling (e.g., ChEMBL-derived datasets), experimental $\text{IC}_{50}$ values vary depending on the assay format (biochemical enzymatic assays vs. cell-based recombinant assays). For instance, benchmark inhibitors like **Tofacitinib** exhibit $\text{pIC}_{50} \approx 6.95$ in biochemical assays ($\text{IC}_{50} \approx 112\text{ nM}$) and $\approx 8.50$ in recombinant enzyme assays ($\text{IC}_{50} \approx 3.2\text{ nM}$). The model faithfully reflects the predominant assay distribution of the curated training set ($\text{predicted pIC}_{50} \approx 7.03$).
-
----
-
-## 🚀 Repository Structure
-
-```text
-├── app.py                              # High-throughput Streamlit web app & GAT inference engine
-├── validation_x_scrambling.py          # X-Scrambling & permutation feature importance validation script
-├── jak1_gat_7000_best.pth              # Pre-trained PyTorch model weights
-├── my_scaler.pkl                       # Serialized StandardScaler fitted on training features
-├── best.vv.csv                         # Selected 1,301 molecular features ranked by R² importance
-├── x_scrambling_7000_1301_report.csv   # Full X-Scrambling & feature importance evaluation report
-├── feature_audit_report_7000.csv       # Pre-training feature auditing summary
-├── clean_features_7000.csv             # Curated feature metadata
-├── requirements.txt                    # Python environment dependencies
-└── README.md                           # Project documentation
+## Usage
+```bash
+git clone [https://github.com/yousifh852004-dot/JAK1-pIC50-Predictor.git](https://github.com/yousifh852004-dot/JAK1-pIC50-Predictor.git)
+cd JAK1-pIC50-Predictor
+pip install -r requirements.txt
+streamlit run app.py
+```
